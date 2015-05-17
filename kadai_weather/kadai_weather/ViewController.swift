@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     private var m_LocationPicker : UIPickerView!
     private let m_PickerValue : NSArray = ["東京", "大阪", "福岡"]
