@@ -13,7 +13,7 @@
 		E60EC8761B083B5600F08D0E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E60EC8751B083B5600F08D0E /* Images.xcassets */; };
 		E60EC8791B083B5600F08D0E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E60EC8771B083B5600F08D0E /* LaunchScreen.xib */; };
 		E60EC8851B083B5600F08D0E /* kadai_weatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EC8841B083B5600F08D0E /* kadai_weatherTests.swift */; };
-		E630F9CA1B08C8D60065FC55 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630F9C91B08C8D60065FC55 /* SwiftyJSON.swift */; };
+		E68104341B0A2A5A000299E2 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68104331B0A2A5A000299E2 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,7 @@
 		E60EC87E1B083B5600F08D0E /* kadai_weatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kadai_weatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E60EC8831B083B5600F08D0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E60EC8841B083B5600F08D0E /* kadai_weatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kadai_weatherTests.swift; sourceTree = "<group>"; };
-		E630F9C91B08C8D60065FC55 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		E68104331B0A2A5A000299E2 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 		E60EC8601B083B5600F08D0E = {
 			isa = PBXGroup;
 			children = (
-				E630F9C91B08C8D60065FC55 /* SwiftyJSON.swift */,
+				E68104331B0A2A5A000299E2 /* SwiftyJSON.swift */,
 				E60EC86B1B083B5600F08D0E /* kadai_weather */,
 				E60EC8811B083B5600F08D0E /* kadai_weatherTests */,
 				E60EC86A1B083B5600F08D0E /* Products */,
@@ -215,7 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E630F9CA1B08C8D60065FC55 /* SwiftyJSON.swift in Sources */,
+				E68104341B0A2A5A000299E2 /* SwiftyJSON.swift in Sources */,
 				E60EC8711B083B5600F08D0E /* ViewController.swift in Sources */,
 				E60EC86F1B083B5600F08D0E /* AppDelegate.swift in Sources */,
 			);
