@@ -97,6 +97,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func DisplayWeatherIcon( location:Int, day:Int ){
+        // 画像のクリア
+        for subview in self.view.subviews{
+            if (1 == subview.tag){
+                subview.removeFromSuperview()
+            }
+        }
+        
         // JSONで天気データを取得
         var json_url : NSURL = NSURL(string: "")!
         switch location{
@@ -112,9 +119,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             break
             
         }
-        
         println(json_url)
         var json_data = NSData(contentsOfURL: json_url)
+        if (nil == json_data){
+            println("JSONデータ取得失敗")
+            return
+        }
         let json = JSON(data:json_data!)
         
         // 画像の取得
@@ -128,15 +138,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         var image_url = NSURL(string:json["forecasts"][day]["image"]["url"].string!)
         var image_data = NSData(contentsOfURL:image_url!)
         var image = UIImage(data: image_data!)
+        
+        // 画像の設置
         var image_view = UIImageView(image: image)
         image_view.tag = 1
         image_view.frame = CGRectMake(pos_x, CGFloat(300), CGFloat(imagesize_width), CGFloat(imagesize_height))
-        
-        for subview in self.view.subviews{
-            if (1 == subview.tag){
-                subview.removeFromSuperview()
-            }
-        }
         self.view.addSubview(image_view)
     }
     
