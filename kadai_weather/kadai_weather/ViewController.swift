@@ -12,7 +12,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // PickerView用のリストデータ
     private var m_LocationPicker : UIPickerView!
-    private let m_PickerValue : NSArray = ["東京", "大阪", "福岡"]
+    private let m_PickerValueLocation : NSArray = ["東京", "大阪", "福岡"]
+    private let m_PickerValueDay : NSArray = ["今日", "明日", "明後日"]
+    private var m_SelectedLocation : Int = 0
+    private var m_SelectedDay : Int = 0
     
     // JSON用のURL
     let TOKYO_URL = NSURL(string:"http://weather.livedoor.com/forecast/webservice/json/v1?city=130010")
@@ -31,7 +34,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.view.addSubview(m_LocationPicker)
         
         // アイコン初期表示
-        DisplayWeatherIcon(0)
+        DisplayWeatherIcon(m_SelectedLocation, day: m_SelectedDay)
     }
 
     /*
@@ -39,7 +42,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     (実装必須)
     */
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
+        return 2
     }
     
     /*
@@ -47,14 +50,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     (実装必須)
     */
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return m_PickerValue.count
+        if (0 == component){
+            return m_PickerValueLocation.count
+        }
+        else if (1 == component){
+            return m_PickerValueDay.count
+        }
+        else{
+            return 0
+        }
     }
     
     /*
     pickerに表示する値を返すデリゲートメソッド.
     */
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String {
-        return m_PickerValue[row] as! String
+        if (0 == component){
+            return m_PickerValueLocation[row] as! String
+        }
+        else if (1 == component){
+            return m_PickerValueDay[row] as! String
+        }
+        else{
+            return String("")
+        }
     }
     
     /*
@@ -62,15 +81,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     */
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         println("row: \(row)")
-        println("value: \(m_PickerValue[row])")
+        if (0 == component){
+            println("value: \(m_PickerValueLocation[row])")
+            m_SelectedLocation = row
+        }
+        else if (1 == component){
+            println("value:\(m_PickerValueDay[row])")
+            m_SelectedDay = row
+        }
+        else{
+        }
+        println("component:\(component)")
         
-        DisplayWeatherIcon(row)
+        DisplayWeatherIcon(m_SelectedLocation, day: m_SelectedDay)
     }
     
-    func DisplayWeatherIcon( row:Int ){
+    func DisplayWeatherIcon( location:Int, day:Int ){
         // JSONで天気データを取得
         var json_url : NSURL = NSURL(string: "")!
-        switch row{
+        switch location{
         case 0: // tokyo
             json_url = TOKYO_URL!
             break
@@ -89,17 +118,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let json = JSON(data:json_data!)
         
         // 画像の取得
-        // 今日
-        var tenki_today_string:String = json["forecasts"][0]["telop"].string!
+        var tenki_today_string:String = json["forecasts"][day]["telop"].string!
         println(tenki_today_string)
         
-        //var imagesize_width = (json["forecasts"][0]["image"]["width"].string!).toInt()
-        //var imagesize_height = (json["forecasts"][0]["image"]["height"].string!).toInt()
-        var imagesize_width = Int(50)
-        var imagesize_height = Int(31)
-        var pos_x = self.view.bounds.width/2 - CGFloat(imagesize_width/2)
+        var imagesize_width = json["forecasts"][day]["image"]["width"].int!
+        var imagesize_height = json["forecasts"][day]["image"]["height"].int!
+        var pos_x = (self.view.bounds.width/2) - CGFloat(imagesize_width/2)
         
-        var image_url = NSURL(string:json["forecasts"][0]["image"]["url"].string!)
+        var image_url = NSURL(string:json["forecasts"][day]["image"]["url"].string!)
         var image_data = NSData(contentsOfURL:image_url!)
         var image = UIImage(data: image_data!)
         var image_view = UIImageView(image: image)
@@ -118,7 +144,5 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
