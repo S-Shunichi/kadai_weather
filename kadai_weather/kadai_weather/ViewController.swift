@@ -22,7 +22,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     let OSAKA_URL = NSURL(string:"http://weather.livedoor.com/forecast/webservice/json/v1?city=270000")
     let FUKUOKA_URL = NSURL(string:"http://weather.livedoor.com/forecast/webservice/json/v1?city=400010")
     
+    // 実処理
     override func viewDidLoad() {
+        // backupLoad
+        var backup : NSUserDefaults = NSUserDefaults()
+        m_SelectedLocation  = backup.integerForKey("Location")
+        m_SelectedDay       = backup.integerForKey("Day")
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -31,6 +37,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         m_LocationPicker.frame = CGRectMake(0, 0, self.view.bounds.width, 180)
         m_LocationPicker.delegate = self
         m_LocationPicker.dataSource = self
+        
+        // 初期値の設定
+        m_LocationPicker.selectRow(m_SelectedLocation, inComponent: 0, animated: true)
+        m_LocationPicker.selectRow(m_SelectedDay, inComponent: 1, animated: true)
+        
         self.view.addSubview(m_LocationPicker)
         
         // アイコン初期表示
@@ -97,6 +108,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func DisplayWeatherIcon( location:Int, day:Int ){
+        // Backupへの書き込み
+        var backup:NSUserDefaults = NSUserDefaults()
+        backup.setObject(location, forKey: "Location")
+        backup.setObject(day, forKey: "Day")
+        
         // 画像のクリア
         for subview in self.view.subviews{
             if (1 == subview.tag){
